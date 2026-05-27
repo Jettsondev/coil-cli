@@ -14,9 +14,15 @@ A beautiful, live-updating terminal monitor — a modern, friendly replacement f
 
 <br />
 
-<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/terminal.png" alt="coil running in a terminal — live GPU stats for an NVIDIA RTX 5070 with utilization, VRAM, temperature, and power bars plus a live process table" width="900" />
+<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/demo.gif" alt="coil — live NVIDIA GPU monitor with animated bars and a Windows XP–themed share card" width="900" />
 
-<sub>↑ <code>coil</code> running live in a terminal — refreshes every second, press <strong>S</strong> to snapshot.</sub>
+<sub>↑ Live demo. <code>coil</code> running on an RTX 5070 — utilization, VRAM, temperature, and power bars update in real time. Press <strong>S</strong> to snapshot your stats into a shareable PNG card.</sub>
+
+<br /><br />
+
+<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/terminal.png" alt="static screenshot of coil running in a terminal — first-frame still of the demo above" width="600" />
+
+<sub>Static still — first frame of the demo, in case the gif fails to load.</sub>
 
 <br /><br />
 
