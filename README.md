@@ -10,9 +10,18 @@
 
 ---
 
-<!-- TODO: add gif -->
+## Quick start
+
+```bash
+npm install -g coil-cli
+coil
+```
+
+That's it. Press **Q** to quit.
+
+<!-- TODO: replace with real demo gif -->
 <p align="center">
-  <em>[ demo gif coming soon ]</em>
+  <em>· demo gif coming soon ·</em>
 </p>
 
 ## Why coil?
@@ -20,9 +29,9 @@
 `nvidia-smi` is great, but it's a static text dump. `coil` gives you a live, glanceable view of your GPU:
 
 - **Live stats** — GPU utilization, VRAM, temperature, and power, refreshed every second.
-- **Color-coded bars** — green under 60%, yellow 60–85%, red above 85%, so problems jump out.
+- **Color-coded bars** — blue under 60%, yellow 60–85%, red above 85%, so problems jump out.
 - **Process table** — every PID using the GPU, sorted by VRAM, with names instead of full paths.
-- **Clean TUI** — built with [Ink](https://github.com/vadimdemedes/ink) (React for the terminal). No screen flicker, no `clear && nvidia-smi` loop.
+- **Clean TUI** — built with [Ink](https://github.com/vadimdemedes/ink) (React for the terminal). No screen flicker, no `clear && nvidia-smi` loop. Uses the alternate screen buffer like `vim` or `htop`, so quitting restores your shell untouched.
 
 ## Install
 
