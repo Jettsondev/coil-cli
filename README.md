@@ -31,6 +31,7 @@ That's it. Press **Q** to quit.
 - **Live stats** — GPU utilization, VRAM, temperature, and power, refreshed every second.
 - **Color-coded bars** — blue under 60%, yellow 60–85%, red above 85%, so problems jump out.
 - **Process table** — every PID using the GPU, sorted by VRAM, with names instead of full paths.
+- **Share card** — press **S** to snapshot your stats into a 1600×900 PNG card. Saved to your home directory and copied to your clipboard, ready to paste into Twitter, Discord, Reddit, or iMessage.
 - **Clean TUI** — built with [Ink](https://github.com/vadimdemedes/ink) (React for the terminal). No screen flicker, no `clear && nvidia-smi` loop. Uses the alternate screen buffer like `vim` or `htop`, so quitting restores your shell untouched.
 
 ## Install
@@ -52,7 +53,23 @@ coil --version        # print version
 coil --help           # show all options
 ```
 
-Press **Q** (or **Ctrl+C**) to quit.
+Inside the TUI:
+
+- **S** — snapshot your current stats into a PNG share card.
+- **Q** or **Ctrl+C** — quit.
+
+## Share your card
+
+Press **S** while `coil` is running and it will generate a beautiful 1600×900 PNG of your current stats — a "player card" of your rig.
+
+The file is saved to your home directory as `~/coil-share-YYYYMMDD-HHMM.png` and copied to your system clipboard. Paste it straight into Twitter, Discord, Reddit, iMessage, or anywhere else.
+
+<!-- TODO: add a sample card PNG here, e.g. ![sample share card](docs/sample-card.png) -->
+<p align="center">
+  <em>· sample share card coming soon ·</em>
+</p>
+
+> On Windows the image is placed on the clipboard directly. On Linux it requires `xclip` to be installed for image-clipboard support. If the OS image-clipboard call fails for any reason, `coil` falls back to copying the saved file's *path* as text so you can still attach it manually.
 
 ## Requirements
 
@@ -66,7 +83,7 @@ Supported on Linux, macOS (with eGPU), and Windows.
 
 ## Roadmap
 
-`v0.1` is the foundation. Here's where we're going:
+`v0.2` adds the share card. Here's where we're going next:
 
 - [ ] **Multi-GPU support** — tabs / side-by-side cards for rigs with multiple GPUs.
 - [ ] **Alerts** — desktop notifications or terminal bells on thresholds (e.g. temp > 85°C).

@@ -5,7 +5,7 @@ import { Command } from 'commander';
 import { execa } from 'execa';
 import { App } from './App.js';
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 
 const ENTER_ALT_SCREEN = '\x1b[?1049h\x1b[2J\x1b[H';
 const LEAVE_ALT_SCREEN = '\x1b[?1049l';

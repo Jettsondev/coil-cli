@@ -1,6 +1,6 @@
 {
   "name": "coil-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "See your NVIDIA GPU in real time — a beautiful, live-updating TUI replacement for nvidia-smi.",
   "type": "module",
   "bin": {
@@ -44,6 +44,8 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.100",
+    "clipboardy": "^4.0.0",
     "commander": "^12.1.0",
     "execa": "^9.6.1",
     "ink": "^5.2.1",

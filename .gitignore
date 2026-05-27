@@ -10,3 +10,6 @@ Thumbs.db
 *.tsbuildinfo
 .vscode/
 .idea/
+
+# Locally generated share cards
+coil-share-*.png
