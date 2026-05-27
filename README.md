@@ -14,7 +14,9 @@ A beautiful, live-updating terminal monitor — a modern, friendly replacement f
 
 <br />
 
-<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/hero.png" alt="coil share card — a live snapshot of an NVIDIA RTX 5070, rendered in a Windows XP Luna theme" width="900" />
+<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/terminal.png" alt="coil running in a terminal — live GPU stats for an NVIDIA RTX 5070 with utilization, VRAM, temperature, and power bars plus a live process table" width="900" />
+
+<sub>↑ <code>coil</code> running live in a terminal — refreshes every second, press <strong>S</strong> to snapshot.</sub>
 
 <br /><br />
 
@@ -73,6 +75,12 @@ coil --help            # show all options
 ## Share your card
 
 Press **S** while `coil` is running and it generates a 1600×900 PNG of your current stats — styled as a Windows XP "System Properties" window sitting on a deep-space wallpaper.
+
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/Jettsondev/coil-cli/main/.github/assets/hero.png" alt="coil share card — Windows XP Luna-themed snapshot of an NVIDIA RTX 5070, showing GPU utilization, VRAM, temperature, power, and the active process list" width="900" />
+
+</div>
 
 The card is:
 
