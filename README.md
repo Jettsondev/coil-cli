@@ -138,7 +138,7 @@ GPU  0  1  2   ·  1/3
 }
 ```
 
-Every field is optional and merges over the defaults shown above. Thresholds drive the bar colors (blue → yellow → red) and the alert system. A malformed file is reported as a warning and ignored — `coil` always starts. Command-line flags (`--interval`, `--filter`, `--alerts` / `--no-alerts`) win over the config file.
+A ready-to-edit [`.coilrc.example`](.coilrc.example) ships in the repo — copy it to `~/.coilrc` and tweak. Every field is optional and merges over the defaults shown above. Thresholds drive the bar colors (blue → yellow → red) and the alert system. A malformed file is reported as a warning and ignored — `coil` always starts. Command-line flags (`--interval`, `--filter`, `--alerts` / `--no-alerts`) win over the config file.
 
 ## Alerts
 

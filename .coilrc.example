@@ -1,0 +1,23 @@
+{
+  "//": "Copy this file to ~/.coilrc (or ~/.coilrc.json) and edit to taste.",
+  "//interval": "Default refresh interval in ms. Overridden by --interval. Min 100.",
+  "interval": 1000,
+
+  "//processFilter": "Only show processes whose name matches this regex (case-insensitive). Overridden by --filter.",
+  "processFilter": null,
+
+  "//thresholds": "warn/crit cutoffs that drive bar colors (blue -> yellow -> red) and alerts. Percent for util/mem/power, degrees C for temp.",
+  "thresholds": {
+    "util":  { "warn": 60, "crit": 85 },
+    "mem":   { "warn": 60, "crit": 85 },
+    "temp":  { "warn": 70, "crit": 80 },
+    "power": { "warn": 60, "crit": 85 }
+  },
+
+  "//alerts": "enabled: master switch (or use --alerts/--no-alerts). bell: ring the terminal bell on crit. desktop: fire a native OS notification on crit.",
+  "alerts": {
+    "enabled": false,
+    "bell": true,
+    "desktop": false
+  }
+}
