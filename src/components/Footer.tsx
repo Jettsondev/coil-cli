@@ -6,6 +6,10 @@ interface FooterProps {
   refreshMs: number;
   errored?: boolean;
   toast?: string | null;
+  /** Show the ←/→ GPU-switch hint (multi-GPU rigs only). */
+  multiGpu?: boolean;
+  /** Show that alerts are armed. */
+  alertsOn?: boolean;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -13,6 +17,8 @@ export const Footer: React.FC<FooterProps> = ({
   refreshMs,
   errored,
   toast,
+  multiGpu,
+  alertsOn,
 }) => {
   if (toast) {
     const color = toast.startsWith('⚠')
@@ -31,12 +37,18 @@ export const Footer: React.FC<FooterProps> = ({
 
   return (
     <Box paddingX={1}>
-      <Text color="gray">Press </Text>
+      {multiGpu ? (
+        <>
+          <Text color="blueBright" bold>←/→</Text>
+          <Text color="gray"> switch GPU · </Text>
+        </>
+      ) : null}
       <Text color="blueBright" bold>S</Text>
-      <Text color="gray"> to share · </Text>
+      <Text color="gray"> share · </Text>
       <Text color="blueBright" bold>Q</Text>
-      <Text color="gray"> to quit · refreshing every {refreshMs / 1000}s · </Text>
+      <Text color="gray"> quit · {refreshMs / 1000}s · </Text>
       <Text color="magenta" bold>coil v{version}</Text>
+      {alertsOn ? <Text color="yellow"> · 🔔 alerts</Text> : null}
       {errored ? <Text color="red"> · ⚠ nvidia-smi error</Text> : null}
     </Box>
   );

@@ -1,6 +1,8 @@
 import { execa } from 'execa';
 
 export interface GpuStats {
+  index: number;
+  uuid: string;
   name: string;
   utilizationGpu: number;
   utilizationMemory: number;
@@ -16,9 +18,13 @@ export interface GpuProcess {
   pid: number;
   name: string;
   memoryUsed: number | null;
+  /** UUID of the GPU this process is running on (for multi-GPU mapping). */
+  gpuUuid: string | null;
 }
 
 const STATS_QUERY = [
+  'index',
+  'uuid',
   'name',
   'utilization.gpu',
   'utilization.memory',
@@ -30,7 +36,7 @@ const STATS_QUERY = [
   'fan.speed',
 ].join(',');
 
-const PROC_QUERY = ['pid', 'process_name', 'used_memory'].join(',');
+const PROC_QUERY = ['pid', 'process_name', 'used_memory', 'gpu_uuid'].join(',');
 
 const CSV_FLAGS = '--format=csv,noheader,nounits';
 
@@ -52,6 +58,14 @@ function parseOptionalNumber(value: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+function cleanString(value: string | undefined, fallback: string): string {
+  const trimmed = (value ?? '').trim();
+  if (!trimmed || trimmed === '[N/A]' || trimmed === '[Not Supported]') {
+    return fallback;
+  }
+  return trimmed;
+}
+
 function basename(p: string): string {
   const trimmed = p.trim();
   if (!trimmed) return 'unknown';
@@ -69,18 +83,20 @@ export async function fetchGpuStats(): Promise<GpuStats[]> {
     .split('\n')
     .map(line => line.trim())
     .filter(Boolean)
-    .map(line => {
+    .map((line, i) => {
       const cols = line.split(',').map(c => c.trim());
       return {
-        name: cols[0] ?? 'Unknown GPU',
-        utilizationGpu: parseNumber(cols[1] ?? ''),
-        utilizationMemory: parseNumber(cols[2] ?? ''),
-        memoryUsed: parseNumber(cols[3] ?? ''),
-        memoryTotal: parseNumber(cols[4] ?? ''),
-        temperature: parseNumber(cols[5] ?? ''),
-        powerDraw: parseNumber(cols[6] ?? ''),
-        powerLimit: parseNumber(cols[7] ?? ''),
-        fanSpeed: parseNumber(cols[8] ?? ''),
+        index: cols[0] != null && cols[0] !== '' ? parseNumber(cols[0]) : i,
+        uuid: cleanString(cols[1], `gpu-${i}`),
+        name: cleanString(cols[2], 'Unknown GPU'),
+        utilizationGpu: parseNumber(cols[3] ?? ''),
+        utilizationMemory: parseNumber(cols[4] ?? ''),
+        memoryUsed: parseNumber(cols[5] ?? ''),
+        memoryTotal: parseNumber(cols[6] ?? ''),
+        temperature: parseNumber(cols[7] ?? ''),
+        powerDraw: parseNumber(cols[8] ?? ''),
+        powerLimit: parseNumber(cols[9] ?? ''),
+        fanSpeed: parseNumber(cols[10] ?? ''),
       } satisfies GpuStats;
     });
 }
@@ -102,13 +118,30 @@ export async function fetchGpuProcesses(): Promise<GpuProcess[]> {
         rawName === '[Insufficient Permissions]'
           ? '(permission denied)'
           : basename(rawName);
+      const rawUuid = (cols[3] ?? '').trim();
       return {
         pid: parseNumber(cols[0] ?? ''),
         name,
         memoryUsed: parseOptionalNumber(cols[2] ?? ''),
+        gpuUuid: rawUuid && rawUuid !== '[N/A]' ? rawUuid : null,
       } satisfies GpuProcess;
     })
     .filter(p => p.pid > 0);
+}
+
+/**
+ * Processes belonging to a given GPU. If processes carry no UUID (older
+ * drivers, or single-GPU boxes where the mapping is unambiguous) we fall back
+ * to showing all of them — better to over-report than hide a running job.
+ */
+export function processesForGpu(
+  processes: GpuProcess[],
+  gpu: GpuStats,
+  totalGpus: number,
+): GpuProcess[] {
+  const anyTagged = processes.some(p => p.gpuUuid != null);
+  if (!anyTagged || totalGpus <= 1) return processes;
+  return processes.filter(p => p.gpuUuid === null || p.gpuUuid === gpu.uuid);
 }
 
 export interface GpuSnapshot {

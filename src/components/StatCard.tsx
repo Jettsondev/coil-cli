@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Text } from 'ink';
 import { Bar } from './Bar.js';
+import { Sparkline } from './Sparkline.js';
 import { Severity, severityColor } from '../theme.js';
 
 interface StatCardProps {
@@ -10,6 +11,11 @@ interface StatCardProps {
   percent: number;
   severity: Severity;
   width?: number;
+  /** Recent samples for the inline trend sparkline. */
+  history?: number[];
+  /** Scale bounds for the sparkline (defaults to 0–100). */
+  historyMin?: number;
+  historyMax?: number;
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -19,8 +25,12 @@ export const StatCard: React.FC<StatCardProps> = ({
   percent,
   severity,
   width = 32,
+  history,
+  historyMin = 0,
+  historyMax = 100,
 }) => {
   const color = severityColor[severity];
+  const inner = width - 4;
 
   return (
     <Box
@@ -41,8 +51,19 @@ export const StatCard: React.FC<StatCardProps> = ({
         {subValue ? <Text color="gray">  {subValue}</Text> : null}
       </Box>
       <Box marginTop={0}>
-        <Bar percent={percent} severity={severity} width={width - 4} />
+        <Bar percent={percent} severity={severity} width={inner} />
       </Box>
+      {history && history.length > 1 ? (
+        <Box marginTop={0}>
+          <Sparkline
+            values={history}
+            width={inner}
+            min={historyMin}
+            max={historyMax}
+            severity={severity}
+          />
+        </Box>
+      ) : null}
     </Box>
   );
 };

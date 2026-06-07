@@ -1,14 +1,28 @@
+import type { Threshold } from './config.js';
+
 export type Severity = 'ok' | 'warn' | 'crit';
 
-export function severityForPercent(pct: number): Severity {
-  if (pct >= 85) return 'crit';
-  if (pct >= 60) return 'warn';
+/** Default thresholds, used when no config is supplied. */
+const DEFAULT_PCT: Threshold = { warn: 60, crit: 85 };
+const DEFAULT_TEMP: Threshold = { warn: 70, crit: 80 };
+
+/** Severity of a percentage against a warn/crit threshold pair. */
+export function severityForPercent(
+  pct: number,
+  t: Threshold = DEFAULT_PCT,
+): Severity {
+  if (pct >= t.crit) return 'crit';
+  if (pct >= t.warn) return 'warn';
   return 'ok';
 }
 
-export function severityForTemp(tempC: number): Severity {
-  if (tempC >= 80) return 'crit';
-  if (tempC >= 70) return 'warn';
+/** Severity of a temperature (°C) against a warn/crit threshold pair. */
+export function severityForTemp(
+  tempC: number,
+  t: Threshold = DEFAULT_TEMP,
+): Severity {
+  if (tempC >= t.crit) return 'crit';
+  if (tempC >= t.warn) return 'warn';
   return 'ok';
 }
 
